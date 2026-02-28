@@ -1,0 +1,5 @@
+__MACOSX/
+.vscode/
+__pycache__
+test.py
+.DS_Store
