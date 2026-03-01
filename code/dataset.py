@@ -1,7 +1,5 @@
 import torch
-import torch.nn as n
 from torch.utils.data import Dataset
-import pandas as pd
 import numpy as np
 
 class ForecastDataset(Dataset):
