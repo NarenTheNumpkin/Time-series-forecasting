@@ -39,15 +39,18 @@ train_dataset = ForecastDataset(X_train, Y_train)
 test_dataset = ForecastDataset(X_test, Y_test)
 
 def main():
+    print("-------Loading Model-------\n")
     model = RecurrentNetwork()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     loss_fn = nn.MSELoss()
 
+    print("-------Loading Datasets-------\n")
     trainer_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True) # Here we put shuffle=True because its batch shuffling and not row shuffling
     val_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
     
     device = torch.device("mps" if torch.mps.is_available() else "cuda") # only MPS or GPU :D
 
+    print("-------Loading Trainer-------\n")
     trainer = Trainer(model, optimizer, loss_fn, trainer_loader, val_loader, device, SAVES)
     trainer.train_epochs(EPOCHS)
 

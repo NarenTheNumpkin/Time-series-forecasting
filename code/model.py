@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 class RecurrentNetwork(nn.Module):
-    def __init__(self, input_size=14, hidden_size=64, num_layers=1):
+    def __init__(self, input_size=13, hidden_size=64, num_layers=1):
         super().__init__()
         self.hidden_size = hidden_size
         self.num_layers = num_layers
