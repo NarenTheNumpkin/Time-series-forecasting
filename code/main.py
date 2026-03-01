@@ -30,15 +30,17 @@ X_train /= x_std
 X_test -= x_mean
 X_test /= x_std
 
-Y_train -= y_mean
-Y_train /= y_std
-Y_test -= y_mean
-Y_test /= y_std
+if TARGET_NORMALIZATION:
+    Y_train -= y_mean
+    Y_train /= y_std
+    Y_test -= y_mean
+    Y_test /= y_std
 
 train_dataset = ForecastDataset(X_train, Y_train)
 test_dataset = ForecastDataset(X_test, Y_test)
 
 def main():
+    print(f"BATCH_SIZE: {BATCH_SIZE}\n EPOCHS: {EPOCHS}\n SPLIT_RATIO: {SPLIT_RATIO}\n TARGET_NORMALIZATION: {TARGET_NORMALIZATION}")
     print("-------Loading Model-------\n")
     model = RecurrentNetwork()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)

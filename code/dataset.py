@@ -7,7 +7,7 @@ class ForecastDataset(Dataset):
                  x,
                  y, 
                  sampling_rate=6, 
-                 sequence_length=3,
+                 sequence_length=120,
                  delay=144
                 ):
         self.sampling_rate = sampling_rate

@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 import os
+from constants import BATCH_SIZE
 
 class Trainer():
     def __init__(
@@ -25,7 +26,9 @@ class Trainer():
     def train_one_epoch(self, epoch):
         self.model.train()
         total_loss = 0
-        for X_batch, Y_batch in self.trainer_loader:
+        for Batch, (X_batch, Y_batch) in enumerate(self.trainer_loader):
+            if (Batch % 1000 == 0):
+                print(f"Batch: [{Batch*BATCH_SIZE}/{len(self.trainer_loader)}]")
             X_batch, Y_batch = X_batch.to(self.device), Y_batch.to(self.device)
 
             preds = self.model(X_batch).squeeze()

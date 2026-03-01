@@ -18,6 +18,7 @@ FILE = os.path.join(DATA, CSV)
 SAVES = "saves/"
 
 # Training hyperparameters
-EPOCHS = 10
+EPOCHS = 20
 BATCH_SIZE = 8
 SPLIT_RATIO = 0.7
+TARGET_NORMALIZATION = False
