@@ -27,8 +27,8 @@ class Trainer():
         self.model.train()
         total_loss = 0
         for Batch, (X_batch, Y_batch) in enumerate(self.trainer_loader):
-            if (Batch % 1000 == 0):
-                print(f"Batch: [{Batch*BATCH_SIZE}/{len(self.trainer_loader)}]")
+            if (Batch % 5000 == 0):
+                print(f"Batch: [{Batch}/{len(self.trainer_loader)}]")
             X_batch, Y_batch = X_batch.to(self.device), Y_batch.to(self.device)
 
             preds = self.model(X_batch).squeeze()
