@@ -1,5 +1,6 @@
 import torch
 from torch import n
+import os
 
 class Trainer():
     def __init__(
@@ -26,11 +27,14 @@ class Trainer():
         total_loss = 0
         for X_batch, Y_batch in self.trainer_loader:
             X_batch, Y_batch = X_batch.to(self.device), Y_batch.to(self.device)
+
             preds = self.model(X_batch).squeeze()
             loss = self.loss_fn(preds, Y_batch)
+
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
+
             total_loss += loss.item()
         avg_loss = total_loss / len(self.trainer_loader)
         print(f"Epoch {epoch} | Train Loss: {avg_loss:.4f}")
@@ -42,12 +46,14 @@ class Trainer():
         with torch.no_grad():
             for X_batch, Y_batch in self.val_loader:
                 X_batch, Y_batch = X_batch.to(self.device), Y_batch.to(self.device)
+
                 pred = self.model(X_batch).squeeze()
                 loss = self.loss_fn(pred, Y_batch)
+
                 val_loss += loss.item()
         avg_val_loss = val_loss / len(self.val_loader)
         print(f"Validation Loss: {avg_val_loss:.4f}")
-        return val_loss
+        return avg_val_loss
 
     def train_epochs(self, epochs):
         best_val_loss = torch.inf
@@ -56,5 +62,5 @@ class Trainer():
             val_loss_epoch = self.evaluate()
             if val_loss_epoch < best_val_loss: # Checkpointing best val loss
                 best_val_loss = val_loss_epoch
-                torch.save(model.state_dict(), self.save_dir)
+                torch.save(model.state_dict(), os.path.join(self.save_dir, 'rnn.pth'))
             print("-"*30)
