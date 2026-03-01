@@ -18,7 +18,7 @@ data.drop(
 
 x = data.to_numpy().astype(np.float32)
 
-samples = int(len(x) * 0.7)
+samples = int(len(x) * SPLIT_RATIO)
 X_train, X_test = x[:samples], x[samples:]
 Y_train, Y_test = y[:samples], y[samples:]
 
@@ -43,8 +43,8 @@ def main():
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     loss_fn = nn.MSELoss()
 
-    trainer_loader = DataLoader(train_dataset, batch_size=16, shuffle=True) # Here we put shuffle=True because its batch shuffling and not row shuffling
-    val_loader = DataLoader(test_dataset, batch_size=16, shuffle=True)
+    trainer_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True) # Here we put shuffle=True because its batch shuffling and not row shuffling
+    val_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
     
     device = torch.device("mps" if torch.mps.is_available() else "cuda") # only MPS or GPU :D
 

@@ -16,4 +16,8 @@ DATA = "data/"
 CSV = "jena_climate_2009_2016.csv"
 FILE = os.path.join(DATA, CSV)
 SAVES = "saves/"
+
+# Training hyperparameters
 EPOCHS = 10
+BATCH_SIZE = 8
+SPLIT_RATIO = 0.7
