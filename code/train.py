@@ -1,5 +1,5 @@
 import torch
-from torch import n
+from torch import nn
 import os
 
 class Trainer():
@@ -10,8 +10,8 @@ class Trainer():
             loss_fn,
             trainer_loader,
             val_loader,
-            save_dir,
-            device
+            device,
+            save_dir
         ):
         self.model = model
         self.optimizer = optimizer

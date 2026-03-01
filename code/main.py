@@ -1,7 +1,12 @@
+import torch
+from torch import nn
+from torch.utils.data import DataLoader
 import numpy as np
 import pandas as pd
 from constants import *
 from dataset import ForecastDataset
+from model import RecurrentNetwork
+from train import Trainer
 
 data = pd.read_csv(FILE)
 y = data['T (degC)'].to_numpy().astype(np.float32)
@@ -33,3 +38,18 @@ Y_test /= y_std
 train_dataset = ForecastDataset(X_train, Y_train)
 test_dataset = ForecastDataset(X_test, Y_test)
 
+def main():
+    model = RecurrentNetwork()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    loss_fn = nn.MSELoss()
+
+    trainer_loader = DataLoader(train_dataset, batch_size=16, shuffle=True) # Here we put shuffle=True because its batch shuffling and not row shuffling
+    val_loader = DataLoader(test_dataset, batch_size=16, shuffle=True)
+    
+    device = torch.device("mps" if torch.mps.is_available() else "cuda") # only MPS or GPU :D
+
+    trainer = Trainer(model, optimizer, loss_fn, trainer_loader, val_loader, device, SAVES)
+    trainer.train_epochs(EPOCHS)
+
+if __name__ == "__main__":
+    main()
