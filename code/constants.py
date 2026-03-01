@@ -1,3 +1,5 @@
+import os
+
 '''
 The exact formulation of the problem will be as follows: 
 
@@ -12,3 +14,4 @@ This dataset covers data from January 1st 2009 to December 31st 2016.
 
 DATA = "data/"
 CSV = "jena_climate_2009_2016.csv"
+FILE = os.path.join(DATA, CSV)
